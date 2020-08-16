@@ -15,8 +15,8 @@
     }
   ],
   "description": "Yet Another Cookie Manager",
-  "permissions": ["cookies", "storage", "tabs", "history", "chrome://favicon/", "<all_urls>"],
-  "content_security_policy": "script-src 'self'; object-src 'self'; img-src chrome://favicon;",
+  "permissions": ["activeTab", "cookies", "storage", "tabs", "history", "<all_urls>"],
+  "content_security_policy": "script-src 'self'; object-src 'self';",
   "background": {
     "scripts": ["background.bundle.js"],
     "persistent": false

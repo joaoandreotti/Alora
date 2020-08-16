@@ -94,12 +94,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 sendResponse(domain ? {
                     enabled: (await StorageAPI.getCookieBlacklist()).has(domain),
                     domain: domain,
-                    faviconUrl: "chrome://favicon/size/24@1x/" + url,
+                    faviconUrl: tab.favIconUrl,
                     locked: false
                 } : {
                     enabled: false,
                     domain: "",
-                    faviconUrl: "chrome://favicon/size/24@1x/",
+                    faviconUrl: tab.favIconUrl,
                     locked: true
                 });
             } else if (message.reqType === "popupEnable") {
