@@ -1,3 +1,5 @@
+@import "~antd/dist/antd.less";
+
 @primaryColor: #3835d0;
 
 /* montserrat-regular - latin */
@@ -22,98 +24,207 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.boldFont {
-  font-weight: 700;
-}
-
-.largeFont {
-  font-size: 24px;
-}
-
-.mediumFont {
-  font-size: 16px;
-}
-
-.smallFont {
-  font-size: 10px;
-}
-
-.primaryColor {
-  color: @primaryColor;
-}
-
 body {
   width: 420px;
-  height: 285px;
-  padding-top: 24px;
+  height: 450px;
+  padding: 25px 35px;
 }
 
-#header {
+.header {
   display: flex;
-  line-height: 44px;
-  height: 53px;
 
-  img {
+  .headerIcon {
+    margin-left: -7px;
+    margin-top: -1px;
     width: 50px;
     height: 53px;
-    margin-left: 28px;
   }
 
-  span {
-    .boldFont();
-    .largeFont();
-    .primaryColor();
+  .headerTitle {
+    color: @primaryColor;
+    font-size: 24px;
+    font-weight: bold;
+    height: 44px;
     margin-left: 7px;
+    margin-bottom: 0;
+  }
+
+  .headerSubTitle {
+    color: @primaryColor;
+    font-size: 12px;
+    font-weight: normal;
+    height: 20px;
+    margin-left: 7px;
+    margin-bottom: 0;
+    margin-top: -6px;
   }
 }
 
-#prefix {
-  margin-top: 9px;
-  text-align: center;
-  height: 23px;
+.ant-menu {
+  &-horizontal {
+    margin-top: 19px;
+    border-bottom: none;
+    height: 37px;
+    vertical-align: center !important;
+    line-height: 37px;
+  }
 
-  span {
-    .boldFont();
-    .mediumFont();
+  &-item {
+    width: 78px;
+    height: 37px;
+    margin: 0 14px 0 0 !important;
+    text-align: center;
+    font-size: 14px;
+    font-weight: normal;
+    vertical-align: baseline !important;
+    padding: 0 8px !important;
+
+    &-selected {
+      font-weight: bold;
+    }
+  }
+
+  .ant-badge-count {
+    background-color: @primaryColor;
+    font-size: 10px;
+    height: 15px;
+    min-width: 15px;
+    line-height: 15px;
+    border-radius: 7.5px;
+    padding: 0;
+    text-align: center;
+    top: -6px;
+    right: -8px;
   }
 }
 
-#url {
-  margin-top: 13px;
+.home-tab {
+  margin-top: 2px;
+}
+
+.home-tab-box {
+  background: rgba(183, 177, 255, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 18px;
   text-align: center;
-  line-height: 15px;
-  height: 24px;
+
+  &-cookie .ant-switch {
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+
+  &-tracker .ant-switch {
+    margin-top: 12px;
+    margin-bottom: 15px;
+  }
+}
+
+.tagline {
+  display: flex;
+  margin: 16px auto 0;
+  width: fit-content;
+  height: 34px;
+  padding-top: 5px;
+
+  .tagline-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 11px;
+    margin-top: 3px;
+    border: @primaryColor 1px solid;
+    border-radius: 8px;
+
+    span {
+      color: @primaryColor;
+      position: relative;
+      top: -5px;
+      font-size: 10px;
+      font-weight: bold;
+      cursor: default;
+    }
+  }
+
+  .tagline-content {
+    span {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+}
+
+.ant-popover-inner {
+  border-radius: 5px;
+
+  &-content {
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 12px;
+  }
+}
+
+#popover-group-1 .ant-popover-inner-content {
+  padding: 15px 10px;
+  max-width: 200px;
+}
+
+#popover-group-2 {
+  .ant-popover {
+    left: 30px !important;
+  }
+
+  .ant-popover-inner-content {
+    padding: 10px;
+    width: 320px;
+    word-break: break-all;
+    height: 80px;
+  }
+
+  .ScrollbarsCustom-TrackY {
+    top: 0 !important;
+    height: 100% !important;
+    width: 5px !important;
+  }
+}
+
+.domain-display {
+  margin: -3px auto 0;
+  padding-top: 5px;
+  height: 34px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   img {
-    width: 24px;
-    height: 24px;
+    display: inline;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
   }
 
   span {
-    .mediumFont();
-    padding-left: 4px; // safe space
-    padding-top: 4px;
+    display: inline;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 10px;
+    line-height: 20px;
   }
 }
 
-#switch {
-  margin-top: 20px;
-  text-align: center;
-  height: 34px;
-}
-
-// patch for custom switch size
 .ant-switch {
-  width: 84px;
+  width: 60px;
   height: 34px;
-  background-color: #ffffff;
+  background-color: rgba(0, 0, 0, 0);
   border: 1px solid @primaryColor;
   box-sizing: content-box;
+  border-radius: 30px;
 
   .ant-switch-handle {
     width: 24px;
     height: 24px;
-    left: 8px;
+    left: 5px;
     top: 5px;
 
     &::before {
@@ -132,7 +243,7 @@ body {
     background-color: @primaryColor;
 
     .ant-switch-handle {
-      left: 52px;
+      left: 31px;
       top: 5px;
 
       &::before {
@@ -147,44 +258,174 @@ body {
   }
 }
 
-#hint {
-  width: 335px;
-  height: 41px;
-  margin-left: 50px;
-  margin-top: 21px;
-  alignment-baseline: top;
+.tracker-tab {
+  margin-top: 17px;
 
-  #hintIcon {
-    width: 16px;
-    height: 16px;
-    margin-left: 1px;
-    margin-right: 1px;
-    line-height: 16px;
-    background-color: @primaryColor;
-    border: 0;
-    border-radius: 16px;
-    display: inline-block;
-    vertical-align:top;
+  .ant-empty {
+    text-align: center;
+    margin: 0;
 
-    span {
-      .boldFont();
-      .smallFont();
-      color: #ffffff;
-      position: relative;
-      left: 6.5px;
-      top: -1px;
+    &-image {
+      width: 159px;
+      height: 180px;
+      margin: 24px auto 14px;
+    }
+
+    &-description {
+      font-size: 14px;
+      height: 34px;
+      line-height: 34px;
+    }
+  }
+}
+
+.tracker-list {
+  height: 226px;
+
+  .single-tracker-content {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 260px;
+  }
+
+  .tracker-list-header {
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .single-tracker-action {
+    margin-right: 9px;
+
+    img {
+      width: 19px;
+      height: 20px;
+      margin-right: 11px;
     }
   }
 
-  #hintText {
-    width: 312px;
-    height: 41px;
-    margin-left: 5px;
-    line-height: 12px;
-    display: inline-block;
+  .ant-btn {
+    font-size: 10px;
+    height: 24px;
+    margin-top: 18px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: #53da81 1px solid;
+  }
 
-    span {
-      .smallFont();
+  .trust-site-btn-trusted {
+    background-color: #53da81;
+    color: #ffffff;
+  }
+}
+
+.manage-tab {
+  margin-top: 18px;
+
+  .ant-empty {
+    height: 180px;
+    margin: 0;
+    padding-top: 60px;
+  }
+}
+
+.info-sites-list {
+  margin: 0 15px;
+
+  span {
+    font-size: 10px;
+    line-height: 15px;
+    color: #000000;
+  }
+}
+
+.sites-list {
+  height: 180px;
+}
+
+.single-site {
+  width: 250px;
+  height: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  img {
+    width: 20px;
+    height: 20px;
+    margin-right: 7px;
+    display: inline;
+    vertical-align: middle;
+  }
+
+  span {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: normal;
+    display: inline;
+    vertical-align: middle;
+  }
+}
+
+.single-site-action {
+  width: 53px;
+  margin-right: 22px;
+
+  a {
+    font-size: 10px;
+    line-height: 20px;
+    color: #000000;
+    transition: color 100ms ease-in-out;
+
+    &:hover {
+      color: @primaryColor;
     }
+  }
+}
+
+.add-site-input {
+  .ant-input-affix-wrapper {
+    margin-top: 18px;
+    width: 280px;
+    height: 30px;
+    border: @primaryColor 1px solid;
+    border-radius: 30px;
+    margin-right: 17px;
+
+    .ant-input-suffix img {
+      width: 17px;
+      height: 18px;
+    }
+  }
+
+  span {
+    font-size: 10px;
+    font-weight: bold;
+    color: @primaryColor;
+    cursor: pointer;
+    transition: color 100ms ease-in-out;
+    line-height: 20px;
+
+    &:hover {
+      color: #000000;
+    }
+  }
+}
+
+.ant-list {
+  margin-right: 10px;
+}
+
+.ScrollbarsCustom-Track {
+  background-color: rgba(0, 0, 0, 0) !important;
+  width: 8px !important;
+
+  .ScrollbarsCustom-Thumb {
+    background-color: #dbdbdb !important;
+    cursor: default !important;
   }
 }
