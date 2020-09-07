@@ -89,6 +89,7 @@ class TagLine extends React.Component {
 
 @observer
 class DomainDisplay extends React.Component {
+    // BEGIN FIREFOX FAVICON
     constructor () {
         super ();
         this.state = {
@@ -99,22 +100,20 @@ class DomainDisplay extends React.Component {
 
     componentDidUpdate () {
         if (this.state.favIconLoaded == false) {
-            console.log ('didupdate? ' + getDomain (appState.get ().homeTabState.url));
             this.state.favIconUrl = getDomain (appState.get ().homeTabState.url);
             const p = new Promise ((resolve, reject) => {
                 resolve (firefoxFavIconRequest (this.state.favIconUrl));
             }).then ((value) => {
-                console.log ('then: ' + value);
-                this.state.favIconUrl = value;
-                this.state.favIconLoaded = true;
+                this.setState ({
+                    favIconUrl: value,
+                    favIconLoaded: true
+                });
             }).catch ((except) => {
-                console.log ('error: ' + except.code);
+                this.state.favIconLoaded = false;
             });
         }
     }
-
-    componentDidMount () {
-    }
+    // END FIREFOX FAVICON
     
     render() {
         return (
@@ -368,6 +367,32 @@ class InfoSitesList extends React.Component {
 
 @observer
 class SingleSite extends React.Component {
+    // END FIREFOX FAVICON
+    constructor () {
+        super ();
+        this.state = {
+            favIconUrl: '',
+            favIconLoaded: false
+        };
+    }
+
+    componentDidMount () {
+        if (this.state.favIconLoaded == false) {
+            //this.state.favIconUrl = this.props.domain;
+            const p = new Promise ((resolve, reject) => {
+                resolve (firefoxFavIconRequest (this.props.domain));
+            }).then ((value) => {
+                this.setState ({
+                    favIconUrl: value,
+                    favIconLoaded: true
+                });
+            }).catch ((except) => {
+                this.state.favIconLoaded = false;
+            });
+        }
+    }
+    // END FIREFOX FAVICON
+
     handleClick = () => {
         chrome.runtime.sendMessage({
             src: 'popup',
@@ -386,8 +411,8 @@ class SingleSite extends React.Component {
         return (
             <>
                 <div className='single-site'>
-                    <img src={getFaviconUrlByDomain(this.props.domain)} onDragStart={preventDrag} alt=''/>
-                    <span>{this.props.domain}</span>
+                    <img src={this.state.favIconUrl} onDragStart={preventDrag} alt=''/>
+                    <span>{this.state.favIconUrl}</span>
                 </div>
                 <div className='single-site-action'>
                     <a onClick={this.handleClick}>{chrome.i18n.getMessage('siteListRemove')}</a>

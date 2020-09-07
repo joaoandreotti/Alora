@@ -6,8 +6,6 @@ import ky from 'ky';
 async function firefoxFavIconRequest (domain) {
     //console.log ('requested: ' + parsed.url + ' (' + parsed.status + ')');
     domain = 'https://' + domain;
-    console.log ('domain: ' + domain.length);
-
     let favIconString = '';
     const parsed = await ky ('', {prefixUrl: domain}).text ()
         .then (function (text) {
