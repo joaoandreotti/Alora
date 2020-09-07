@@ -5,7 +5,7 @@ import Scrollbar from 'react-scrollbars-custom';
 import {observable, toJS} from 'mobx';
 import {observer} from 'mobx-react';
 
-import {getFaviconUrlByDomain, getFriendlyUrl, preventDrag, prettyPrint, getDomain, getFaviconUrlByUrl} from "./utils";
+import {getFaviconUrlByDomain, getFriendlyUrl, preventDrag, prettyPrint, getDomain, getFaviconUrlByUrl, firefoxFavIconRequest} from "./utils";
 
 import '../css/popup.less';
 
@@ -89,11 +89,38 @@ class TagLine extends React.Component {
 
 @observer
 class DomainDisplay extends React.Component {
+    constructor () {
+        super ();
+        this.state = {
+            favIconUrl: '',
+            favIconLoaded: false
+        };
+    }
+
+    componentDidUpdate () {
+        if (this.state.favIconLoaded == false) {
+            console.log ('didupdate? ' + getDomain (appState.get ().homeTabState.url));
+            this.state.favIconUrl = getDomain (appState.get ().homeTabState.url);
+            const p = new Promise ((resolve, reject) => {
+                resolve (firefoxFavIconRequest (this.state.favIconUrl));
+            }).then ((value) => {
+                console.log ('then: ' + value);
+                this.state.favIconUrl = value;
+                this.state.favIconLoaded = true;
+            }).catch ((except) => {
+                console.log ('error: ' + except.code);
+            });
+        }
+    }
+
+    componentDidMount () {
+    }
+    
     render() {
         return (
             <div className='domain-display'>
-                <img src={getFaviconUrlByUrl(appState.get().homeTabState.url)} onDragStart={preventDrag} alt=''/>
-                <span>{getDomain(appState.get().homeTabState.url)}</span>
+                <img src={this.state.favIconUrl} onDragStart={preventDrag} alt=''/>
+                <span>{getDomain (appState.get ().homeTabState.url)}</span>
             </div>
         );
     }

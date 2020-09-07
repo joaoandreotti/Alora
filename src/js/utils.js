@@ -1,3 +1,39 @@
+// BEGIN FIREFOX FAVICON
+// two options for favicon
+// either on URL/favicon.ico
+// or on <link rel="icon" href="">
+import ky from 'ky';
+async function firefoxFavIconRequest (domain) {
+    //console.log ('requested: ' + parsed.url + ' (' + parsed.status + ')');
+    domain = 'https://' + domain;
+    console.log ('domain: ' + domain.length);
+
+    let favIconString = '';
+    const parsed = await ky ('', {prefixUrl: domain}).text ()
+        .then (function (text) {
+        let str = text.split ('\n');
+        str.forEach (function (item) {
+            if (favIconString.length == 0) {
+                if (item.indexOf ('favicon') != -1) {
+                    item = item.replace (/.*href=\"/, '');
+                    item = item.replace (/\">/, '');
+                    if (item.replace (/.*[\/]/, '').indexOf ('.png') != -1)
+                        favIconString = item;
+                }
+            }
+        });
+        if (favIconString == '')
+            favIconString = domain + '/favicon.ico';
+
+        if (favIconString.indexOf ('http') == -1)
+            favIconString = domain + favIconString;
+    });
+
+    return favIconString;
+}
+// END FIREFOX FAVICON
+
+
 const iconList = {
     0: '🟢', // green circle
     1: '🟡', // yellow circle
@@ -61,5 +97,5 @@ function getCustomRule(url) {
 }
 
 export {
-    prettyPrint, getDomain, preventDrag, getFaviconUrlByDomain, getFaviconUrlByUrl, getFriendlyUrl, getCustomRule
+    prettyPrint, getDomain, preventDrag, getFaviconUrlByDomain, getFaviconUrlByUrl, getFriendlyUrl, getCustomRule, firefoxFavIconRequest
 };
