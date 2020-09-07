@@ -412,7 +412,7 @@ class SingleSite extends React.Component {
             <>
                 <div className='single-site'>
                     <img src={this.state.favIconUrl} onDragStart={preventDrag} alt=''/>
-                    <span>{this.state.favIconUrl}</span>
+                    <span>{this.props.domain}</span>
                 </div>
                 <div className='single-site-action'>
                     <a onClick={this.handleClick}>{chrome.i18n.getMessage('siteListRemove')}</a>
