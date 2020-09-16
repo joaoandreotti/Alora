@@ -31,7 +31,6 @@ async function firefoxFavIconRequest (domain) {
 }
 // END FIREFOX FAVICON
 
-
 const iconList = {
     0: '🟢', // green circle
     1: '🟡', // yellow circle
@@ -56,23 +55,17 @@ function preventDrag(e) {
 }
 
 function getFaviconUrlByDomain(domain) {
-		return '';
-
-		/*
-		if (domain.includes('.')) {
-			// use HTTPS by default
-			return 'chrome://favicon/size/20@1x/https://' + domain;
-		} else {
-			// not a usual domain, use chrome:// protocol instead
-			return 'chrome://favicon/size/20@1x/chrome://' + domain;
-		}
-		*/
+    if (domain.includes('.')) {
+        // use HTTPS by default
+        return 'chrome://favicon/size/20@1x/https://' + domain;
+    } else {
+        // not a usual domain, use chrome:// protocol instead
+        return 'chrome://favicon/size/20@1x/chrome://' + domain;
+    }
 }
 
 function getFaviconUrlByUrl(url) {
-		return '';
-
-    //return 'chrome://favicon/size/20@1x/' + url;
+    return 'chrome://favicon/size/20@1x/' + url;
 }
 
 // use by popup to display tracker url in a friendly way
