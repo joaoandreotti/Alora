@@ -4,6 +4,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const {HashedModuleIdsPlugin} = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const baseConfig = require('./webpack.config');
 const {PROJECT_ROOT} = require('./env');
 
@@ -16,7 +18,9 @@ module.exports = merge(baseConfig, {
             hashDigest: 'hex',
             hashDigestLength: 20
         }),
-        new LodashModuleReplacementPlugin
+        new LodashModuleReplacementPlugin,
+        new AntdDayjsWebpackPlugin(),
+        // new BundleAnalyzerPlugin()
     ],
     optimization: {
         minimize: true,
@@ -25,7 +29,10 @@ module.exports = merge(baseConfig, {
                 extractComments: false
             }),
             new OptimizeCSSAssetsPlugin()
-        ]
+        ],
+        splitChunks: {
+            chunks: 'async'
+        }
     },
     performance: {
         hints: false

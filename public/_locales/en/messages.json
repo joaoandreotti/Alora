@@ -4,7 +4,7 @@
     "description": "extension name, only for manifest.json"
   },
   "extDescription": {
-    "message": "Proteja sua privacidade de dados online",
+    "message": "Protect your online data privacy",
     "description": "extension description, only for manifest.json"
   },
   "title": {
@@ -12,7 +12,7 @@
     "description": "popup title"
   },
   "subTitle": {
-    "message": "Proteja sua privacidade de dados online",
+    "message": "Protect your online data privacy",
     "description": "popup sub title"
   },
   "homeTab": {
@@ -24,55 +24,67 @@
     "description": "tracker tab text"
   },
   "manageTab": {
-    "message": "Gerenciar",
+    "message": "Manage",
     "description": "manage tab text"
   },
   "cookieSwitchText": {
-    "message": "Não armazene meu histórico em",
+    "message": "Never store my browsing history on",
     "description": "text above cookie switch"
   },
   "cookieSwitchHint": {
-    "message": "Ao apagar o seu histórico de navegação, Alora o ajudará a reduzir anúncios e limpar o cache e os cookies relacionados a este site em seu computador.",
+    "message": "By erasing your browsing history, Alora will help you reduce ads and clean the cache and cookies related to this site on your computer.",
     "description": "hint above cookie switch"
   },
   "trackerSwitchText": {
-    "message": "Bloquear rastreadores em todos os sites",
+    "message": "Blocking trackers and ADs on all sites",
     "description": "text above tracker switch"
   },
   "trackerSwitchHint": {
-    "message": "Alora bloqueia rastreadores e outros scripts maliciosos de seguir você online para coletar informações sobre seus hábitos de navegação e interesses.",
+    "message": "Alora blocks trackers and other malicious scripts from following you around online to collect information about your browsing habits and interests.",
     "description": "hint above tracker switch"
   },
   "noTracker": {
-    "message": "Não há rastreadores nesse site!",
+    "message": "There are no tracker on this site!",
     "description": "empty message on tracker tab"
   },
   "trustSite": {
-    "message": "Tornar site confiável",
+    "message": "Trust Site",
     "description": "trust site button on tracker tab"
   },
   "distrustSite": {
-    "message": "Tornar site não confiável",
+    "message": "Distrust Site",
     "description": "distrust site button on tracker tab"
   },
   "siteListHint": {
-    "message": "No momento, você está apagando o histórico de navegação dos seguintes sites:",
+    "message": "You are currently erasing the browsing history from the following site(s):",
     "description": "hint text above site list on manage tab"
   },
   "siteListRemove": {
-    "message": "Remover",
+    "message": "Remove",
     "description": "remove button text of site list on manage tab"
   },
   "siteListAdd": {
-    "message": "Adicionar",
+    "message": "Add",
     "description": "add button text of site list on manage tab"
   },
   "siteListDomainExists": {
-    "message": "Domínio já existe",
+    "message": "Domain already exists",
     "description": "error message that domain already exists on manage tab"
   },
   "noSite": {
-    "message": "Sem sites",
+    "message": "No Site",
     "description": "empty message on manage tab"
+  },
+  "trackerCategory_tracker": {
+    "message": "Tracker",
+    "description": "name of tracker category in tracker tab"
+  },
+  "trackerCategory_ad": {
+    "message": "Ads",
+    "description": "name of ad category in tracker tab"
+  },
+  "trackerCategoryBlocked": {
+    "message": "Blocked",
+    "description": "text after category-wise blocked number"
   }
 }

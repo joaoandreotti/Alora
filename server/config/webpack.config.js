@@ -40,10 +40,11 @@ module.exports = {
                             '@babel/preset-react'
                         ],
                         plugins: [
+                            'babel-plugin-lodash',
+                            'react-hot-loader/babel',
                             ['@babel/plugin-proposal-decorators', {legacy: true}],
                             ['@babel/plugin-proposal-class-properties', {loose: true}],
-                            'babel-plugin-lodash',
-                            'react-hot-loader/babel'
+                            ['babel-plugin-import', {libraryName: 'antd'}]
                         ]
                     }
                 },
@@ -113,6 +114,7 @@ module.exports = {
             cleanStaleWebpackAssets: false
         }),
         new WebpackBar({
+            name: isDev ? 'Debug' : 'Release',
             color: isDev ? '#fff300' : '#00fff7'
         }),
         new FriendlyErrorsPlugin(),
@@ -146,16 +148,6 @@ module.exports = {
                 {
                     from: resolve(PROJECT_ROOT, 'public'),
                     to: resolve(PROJECT_ROOT, 'build'),
-                    flatten: true,
-                    force: true
-                }
-            ]
-        }),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: resolve(PROJECT_ROOT, 'src/_locales'),
-                    to: resolve(PROJECT_ROOT, 'build/_locales'),
                     force: true
                 }
             ]
@@ -168,10 +160,5 @@ module.exports = {
                 collapseWhitespace: true
             }
         })
-    ],
-    resolve: {
-        alias: {
-            'react-dom': '@hot-loader/react-dom'
-        }
-    }
+    ]
 };

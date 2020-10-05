@@ -4,7 +4,7 @@
     "description": "extension name, only for manifest.json"
   },
   "extDescription": {
-    "message": "保护您的浏览隐私",
+    "message": "Proteja la privacidad de sus datos en línea",
     "description": "extension description, only for manifest.json"
   },
   "title": {
@@ -12,67 +12,67 @@
     "description": "popup title"
   },
   "subTitle": {
-    "message": "保护您的浏览隐私",
+    "message": "Proteja la privacidad de sus datos en línea",
     "description": "popup sub title"
   },
   "homeTab": {
-    "message": "主页",
+    "message": "Hogar",
     "description": "home tab text"
   },
   "trackerTab": {
-    "message": "追踪行为",
+    "message": "Rastreadoras",
     "description": "tracker tab text"
   },
   "manageTab": {
-    "message": "管理",
+    "message": "Gestionar",
     "description": "manage tab text"
   },
   "cookieSwitchText": {
-    "message": "本站自动删除历史记录",
+    "message": "Nunca almacene mi historial de navegación en",
     "description": "text above cookie switch"
   },
   "cookieSwitchHint": {
-    "message": "通过自动删除浏览历史记录，Alora将帮助您减少广告并清理您计算机上与此网站相关的缓存和cookie。",
+    "message": "Al borrar su historial de navegación, Alora lo ayudará a reducir los anuncios y limpiar el caché y las cookies relacionadas con este sitio en su computadora.",
     "description": "hint above cookie switch"
   },
   "trackerSwitchText": {
-    "message": "在所有网站上阻止跟踪行为",
+    "message": "Bloquear anuncios y rastreadores en todos los sitios web",
     "description": "text above tracker switch"
   },
   "trackerSwitchHint": {
-    "message": "Alora阻止该网页的跟踪行为和其他恶意脚本收集有关您的浏览习惯和兴趣的信息。",
+    "message": "Alora bloquea los anuncios y rastreadores y otros scripts maliciosos para que no lo sigan en línea para recopilar información sobre sus hábitos e intereses de navegación.",
     "description": "hint above tracker switch"
   },
   "noTracker": {
-    "message": "该网站上没有追踪行为！",
+    "message": "¡No hay rastreadores en este sitio!",
     "description": "empty message on tracker tab"
   },
   "trustSite": {
-    "message": "信任本网站",
+    "message": "Sitio de confianza",
     "description": "trust site button on tracker tab"
   },
   "distrustSite": {
-    "message": "不信任本网站",
+    "message": "Sitio de desconfianza",
     "description": "distrust site button on tracker tab"
   },
   "siteListHint": {
-    "message": "您在自动擦除以下网站的浏览历史记录：",
+    "message": "Actualmente, está borrando el historial de navegación de los siguientes sitios:",
     "description": "hint text above site list on manage tab"
   },
   "siteListRemove": {
-    "message": "删除",
+    "message": "Eliminar",
     "description": "remove button text of site list on manage tab"
   },
   "siteListAdd": {
-    "message": "添加",
+    "message": "Agregar",
     "description": "add button text of site list on manage tab"
   },
   "siteListDomainExists": {
-    "message": "网站已存在",
+    "message": "El dominio ya existe",
     "description": "error message that domain already exists on manage tab"
   },
   "noSite": {
-    "message": "没有网站",
+    "message": "Sin sitio",
     "description": "empty message on manage tab"
   }
 }

@@ -4,8 +4,9 @@ import {Badge, Button, Empty, Input, List, Menu, Popover, Switch} from 'antd';
 import Scrollbar from 'react-scrollbars-custom';
 import {observable, toJS} from 'mobx';
 import {observer} from 'mobx-react';
+import { v4 as uuidv4 } from 'uuid';
 
-import {getFaviconUrlByDomain, getFriendlyUrl, preventDrag, prettyPrint, getDomain, getFaviconUrlByUrl, firefoxFavIconRequest} from "./utils";
+import {getFaviconUrlFromDomain, getFriendlyRuleFromRule, preventDrag, prettyPrint, getDomainFromUrl, getFaviconUrlFromUrl, firefoxFavIconRequest} from "./utils";
 
 import '../css/popup.less';
 
@@ -37,11 +38,13 @@ class Header extends React.Component {
 @observer
 class MenuBar extends React.Component {
     get badgeNumber() {
-        return appState.get().trackerTabState.listItems
-            .filter(item =>
-                !item.isHeader && !item.userAllowed && !appState.get().trackerTabState.siteTrusted
-            )
-            .length;
+        let result = 0;
+        for (let category in appState.get().trackerTabState.listItems) {
+            result += appState.get().trackerTabState.listItems[category]
+                .filter(item => !item.userAllowed && !appState.get().trackerTabState.siteTrusted)
+                .length;
+        }
+        return result;
     }
 
     render() {
@@ -87,7 +90,6 @@ class TagLine extends React.Component {
                     placement='bottomLeft'
                     content={<div>{this.props.hint}</div>}
                     trigger='hover'
-                    getPopupContainer={() => document.getElementById('popover-group-1')}
                 >
                     <div className='tagline-icon'>
                         <span>i</span>
@@ -114,7 +116,7 @@ class DomainDisplay extends React.Component {
 
     componentDidUpdate () {
         if (this.state.favIconLoaded == false) {
-            this.state.favIconUrl = getDomain (appState.get ().homeTabState.url);
+            this.state.favIconUrl = getDomainFromUrl (appState.get ().homeTabState.url);
             const p = new Promise ((resolve, reject) => {
                 resolve (firefoxFavIconRequest (this.state.favIconUrl));
             }).then ((value) => {
@@ -133,7 +135,7 @@ class DomainDisplay extends React.Component {
         return (
             <div className='domain-display'>
                 <img src={this.state.favIconUrl} onDragStart={preventDrag} alt=''/>
-                <span>{getDomain (appState.get ().homeTabState.url)}</span>
+                <span>{getDomainFromUrl(appState.get().homeTabState.url)}</span>
             </div>
         );
     }
@@ -150,7 +152,7 @@ class ToggleSwitch extends React.Component {
 
 @observer
 class HomeTab extends React.Component {
-    getCookieSwitchState = () => appState.get().manageTabState.listItems.includes(getDomain(appState.get().homeTabState.url));
+    getCookieSwitchState = () => appState.get().manageTabState.listItems.includes(getDomainFromUrl(appState.get().homeTabState.url));
 
     getTrackerSwitchState = () => appState.get().homeTabState.trackerSwitchState;
 
@@ -160,14 +162,14 @@ class HomeTab extends React.Component {
             src: 'popup',
             action: `${newState ? 'add' : 'del'} cookie blacklist`,
             data: {
-                domain: getDomain(appState.get().homeTabState.url)
+                domain: getDomainFromUrl(appState.get().homeTabState.url)
             }
         }, response => {
             if (response.result) {
                 if (newState) {
-                    appState.get().manageTabState.listItems.push(getDomain(appState.get().homeTabState.url));
+                    appState.get().manageTabState.listItems.push(getDomainFromUrl(appState.get().homeTabState.url));
                 } else {
-                    appState.get().manageTabState.listItems.remove(getDomain(appState.get().homeTabState.url));
+                    appState.get().manageTabState.listItems.remove(getDomainFromUrl(appState.get().homeTabState.url));
                 }
             }
         });
@@ -234,7 +236,7 @@ class SingleTracker extends React.Component {
             src: 'popup',
             action: `${value ? 'add' : 'del'} tracker allowed`,
             data: {
-                domain: getDomain(appState.get().homeTabState.url),
+                domain: getDomainFromUrl(appState.get().homeTabState.url),
                 url: this.props.item.content
             }
         }, response => {
@@ -245,20 +247,10 @@ class SingleTracker extends React.Component {
     }
 
     render() {
-        const friendlyUrl = getFriendlyUrl(this.props.item.content);
+        const friendlyRule = getFriendlyRuleFromRule(this.props.item.content);
         return (
             <>
-                <Popover
-                    trigger='click'
-                    content={(
-                        <Scrollbar>
-                            <span>{this.props.item.content}</span>
-                        </Scrollbar>
-                    )}
-                    getPopupContainer={() => document.getElementById('popover-group-2')}
-                >
-                    <span className='single-tracker-content'><strong>{friendlyUrl[0]}</strong> {friendlyUrl[1]}</span>
-                </Popover>
+                <span className='single-tracker-content'>{friendlyRule[0]}@{friendlyRule[1]}</span>
                 <div className='single-tracker-action'>
                     <img
                         alt=''
@@ -293,21 +285,12 @@ class TrackerList extends React.Component {
     render() {
         return (
             <List>
-                {appState.get().trackerTabState.listItems.map(item => {
-                    if (item.isHeader) {
-                        return (
-                            <List.Item key={item.content}>
-                                <span className='tracker-list-header'>{item.content}</span>
-                            </List.Item>
-                        );
-                    } else {
-                        return (
-                            <List.Item key={item.content}>
-                                <SingleTracker item={item}/>
-                            </List.Item>
-                        );
-                    }
-                })}
+                {
+                    this.props.items.map(item =>
+                        <List.Item key={uuidv4()}>
+                            <SingleTracker item={item}/>
+                        </List.Item>)
+                }
             </List>
         );
     }
@@ -316,7 +299,13 @@ class TrackerList extends React.Component {
 @observer
 class TrackerTab extends React.Component {
     get isEmpty() {
-        return appState.get().trackerTabState.listItems.length <= 0;
+        return Object.entries(appState.get().trackerTabState.listItems)
+            .map(i => i[1].length)
+            .every(i => i <= 0);
+    }
+
+    get siteTrusted() {
+        return appState.get().trackerTabState.siteTrusted;
     }
 
     handleClick = () => {
@@ -325,7 +314,7 @@ class TrackerTab extends React.Component {
             src: 'popup',
             action: `${newState ? 'add' : 'del'} tracker whitelist`,
             data: {
-                domain: getDomain(appState.get().homeTabState.url)
+                domain: getDomainFromUrl(appState.get().homeTabState.url)
             }
         }, response => {
             if (response.result) {
@@ -349,7 +338,23 @@ class TrackerTab extends React.Component {
                     style={{display: !this.isEmpty ? 'block' : 'none'}}
                 >
                     <Scrollbar>
-                        <TrackerList/>
+                        {Object.entries(appState.get().trackerTabState.listItems).map(pair => {
+                            const title = pair[0];
+                            const items = pair[1];
+                            return <div key={uuidv4()}>
+                                <div className='tracker-list-header'>
+                                    <span className='tracker-list-header-text'>{title}</span>
+                                    <div className='tracker-list-header-badge'>
+                                        {items
+                                            .filter(i => !this.siteTrusted && !i.userAllowed)
+                                            .length
+                                            .toString()
+                                        } {chrome.i18n.getMessage('trackerCategoryBlocked')}
+                                    </div>
+                                </div>
+                                <TrackerList items={items}/>
+                            </div>;
+                        })}
                     </Scrollbar>
                     <Button
                         className={
@@ -444,7 +449,7 @@ class SitesList extends React.Component {
             <List>
                 {appState.get().manageTabState.listItems.map(domain => {
                     return (
-                        <List.Item key={domain}>
+                        <List.Item key={uuidv4()}>
                             <SingleSite domain={domain}/>
                         </List.Item>
                     );
@@ -564,10 +569,21 @@ const appState = observable.box({
 
 // request config from background script
 const queryConfig = async () => {
+    const tabId = await new Promise(resolve => {
+        chrome.tabs.query({
+            active: true,
+            currentWindow: true
+        }, tabs => {
+            resolve(tabs[0].id);
+        });
+    });
     const response = await new Promise(resolve => {
         chrome.runtime.sendMessage({
             src: 'popup',
-            action: 'query config'
+            action: 'query config',
+            data: {
+                tabId
+            }
         }, resolve);
     });
     appState.set(response.appState);
@@ -578,6 +594,6 @@ const queryConfig = async () => {
 // immediately call to query initial config
 queryConfig().then();
 // update based on a fixed interval
-setInterval(queryConfig, 5000);
+// setInterval(queryConfig, 5000);
 
 ReactDOM.render(<App/>, document.getElementById('root'));
